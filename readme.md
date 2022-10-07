@@ -1,4 +1,7 @@
-This is the read me file
+Refrigerator app
 
-please contribute here to test
-Hi Chris! Test complete
+- List ingredients (expiration dates)-Database(flask)
+- provide recipes
+- setup github repo
+- preliminary readme
+
