@@ -6,24 +6,25 @@
         body {
             background-image: url("https://parade.com/.image/t_share/MTkwNTgxMjkxNjk3NTc5OTAw/istock-1203599963-jpg.jpg");
             background-color: #cccccc;
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
         }
-        h1{
-            color: white;
-            text-align: center;
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-        }
-        p{
-            color: white;
-            text-align: center; 
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-        }
-        form{
-            text-align: center;
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-        }
-        
 
+        h1 {
+            color: white;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        p {
+            color: white;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        form {
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
     </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,13 +34,13 @@
 
 <body>
     <h1>Recipe Generator</h1>
-    <p>Please enter ingredients to see tasty recipes you can create.</p>   
-    
+    <p>Please enter ingredients to see tasty recipes you can create.</p>
+
 
     <!-- Syntax https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples,+flour,+sugar&number=2-->
     <!-- Params: ingredients, number (number of recipes), ranking (1 for maximizing used ingredients or 2 for minimizing missing ingredients) and ignore pantry-->
 
-    <form action="/madeupUrl" method="post">
+    <form action="{{ url_for("gfg")}}" method="post">
         <!--<div class="mb-3">
             <label for="Ingredients" class="form-label">What's in your Fridge?</label>
             <input type="text" class="form-control" id="Ingredients" aria-describedby="emailHelp"
@@ -101,12 +102,14 @@
 
         <br>
 
-        <button type="add" value="Add" class="btn btn-primary" id="sendIt">Add</button>
+
         <button type="submit" value="Submit" class="btn btn-primary" id="sendIt">Submit</button>
-        <button type="reset" value="Reset" class="btn btn-primary" id="sendIt">Reset</button>
+
 
 
     </form>
+    <button type="add" value="Add" class="btn btn-primary" id="sendIt">Add</button>
+    <button type="reset" value="Reset" class="btn btn-primary" id="sendIt">Reset</button>
 
 
 
