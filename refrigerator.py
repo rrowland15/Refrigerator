@@ -1,10 +1,14 @@
-from flask import Flask
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def home():
-    return "Hello! this is the main page <h1>Refrigerator Application<h1>"
+    if request.method == 'POST':
+        return ''
+    else:
+        #return "This is a get request"
+        return render_template('refrigerator2.html')
 
 if __name__ == "__main__":
     app.run()
