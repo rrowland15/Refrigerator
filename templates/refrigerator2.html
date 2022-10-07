@@ -2,6 +2,30 @@
 <html>
 
 <head>
+    <style>
+        body {
+            background-image: url("https://parade.com/.image/t_share/MTkwNTgxMjkxNjk3NTc5OTAw/istock-1203599963-jpg.jpg");
+            background-color: #cccccc;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        p {
+            color: white;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        form {
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -9,23 +33,86 @@
 </head>
 
 <body>
-
     <h1>Recipe Generator</h1>
+    <p>See what is in your fridge</p>
+    <form action="/placeholder" method="post"></form>
+    <button type="submit" value="Submit" class="btn btn-primary" id="sendIt">What's in my fridge?</button>
+    </form>
+    <br>
+    <br>
+    <p>Add items to your fridge</p>
 
-    <p>Please enter ingredients to see tasty recipes you can create.</p>
+    <form action="{{ url_for("gfg")}}" method="post">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Add Item</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Ingredient" name="Ingredient1">
+            <input type="text" class="form-control" placeholder="Expiration" name="Ingredient1expiration">
+        </div>
+        <div id="result1"></div>
+        <br>
+        <button type="submit" value="Submit" class="btn btn-primary" id="sendIt">Submit</button>
+        <button type="add" value="Add" class="btn btn-primary" id="sendIt">Add</button>
+        <button type="reset" value="Reset" class="btn btn-primary" id="sendIt">Reset</button>
+    </form>
 
-    <!-- Syntax https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples,+flour,+sugar&number=2-->
-    <!-- Params: ingredients, number (number of recipes), ranking (1 for maximizing used ingredients or 2 for minimizing missing ingredients) and ignore pantry-->
+    <br>
 
-    <form action="/madeupUrl" method="post">
-        <!--<div class="mb-3">
+    <p>Remove items from your fridge</p>
+
+    <form action="/placeholder" method="post">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Remove Item</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Ingredient" name="Ingredient1">
+
+            <div id="result1"></div>
+            <br>
+            <button type="submit" value="Submit" class="btn btn-primary" id="sendIt">Submit</button>
+    </form>
+
+    <br>
+
+    <p> Find yourself a super delicous recipe using your oldest ingredients!</p>
+    <form action="/placeholder" method="post"></form>
+    <button type="submit" value="Submit" class="btn btn-primary" id="sendIt">Find super yummy recipe!</button>
+    </form>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+
+<!--This is a comment. Comments are not displayed in the browser-->
+<!-- Navbar-  -->
+
+<!-- ?apiKey=YOUR-API-KEY.-->
+<!-- Added comment to test git push-->
+
+<!-- Syntax https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples,+flour,+sugar&number=2-->
+<!-- Params: ingredients, number (number of recipes), ranking (1 for maximizing used ingredients or 2 for minimizing missing ingredients) and ignore pantry-->
+
+
+<!--<div class="mb-3">
             <label for="Ingredients" class="form-label">What's in your Fridge?</label>
             <input type="text" class="form-control" id="Ingredients" aria-describedby="emailHelp"
                 onKeyUp="doSomeCalculationsAndDisplay()" onChange="doSomeCalculationsAndDisplay()">
             <div id="userguidecsv" class="form-text">Enter comma separated ingredients</div>
         </div>-->
 
-        <!--<script>
+<!--<script>
             function doSomeCalculationsAndDisplay(event) {
                 const elem = document.getElementById('Ingredients');
                 console.log(elem.value);
@@ -43,68 +130,25 @@
 
         <div id="result"></div>-->
 
-        <!-- <button type="submit" class="btn btn-primary" id="takeMe">Submit</button>
+<!-- <button type="submit" class="btn btn-primary" id="takeMe">Submit</button>
     <script>
         document.getElementById("takeMe").addEventListener("click", myFunction);
         function myFunction() {
             window.location.href = finalUrlString;
         }
+
+    <script>
+        let fridge_dict = new Object()
+
+        Ingredient1.onblur = ingredientsTodict
+        Ingredient1expiration.onblur = ingredientsTodict
+
+
+        function ingredientsTodict(event) {
+            elem1 = document.getElementById("Ingredient1");
+            elem1expiry = document.getElementById("Ingredient1expiration");
+            console.log(elem1.value)
+            fridge_dict[elem1.value] = elem1expiry.value
+            document.getElementById('result1').innerText = fridge_dict
+        }
     </script>-->
-
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Fridge Item</span>
-            </div>
-            <input type="text" class="form-control" placeholder="Ingredient" name="Ingredient1">
-            <input type="text" class="form-control" placeholder="Expiration" name="Ingredient1expiration">
-        </div>
-
-        <script>
-            let fridge_dict = new Object()
-
-            Ingredient1.onblur = ingredientsTodict
-            Ingredient1expiration.onblur = ingredientsTodict
-
-
-            function ingredientsTodict(event) {
-                elem1 = document.getElementById("Ingredient1");
-                elem1expiry = document.getElementById("Ingredient1expiration");
-                console.log(elem1.value)
-                fridge_dict[elem1.value] = elem1expiry.value
-                document.getElementById('result1').innerText = fridge_dict
-            }
-        </script>
-
-        <div id="result1"></div>
-
-
-        <button type="submit" value="Submit" class="btn btn-primary" id="sendIt">Submit</button>
-        <button id="add" type="submit">Add</button>
-        <button id="reset" onclick="inputReset()">Reset</button>
-    </form>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-        crossorigin="anonymous"></script>
-
-
-
-</body>
-
-</html>
-
-
-<!--This is a comment. Comments are not displayed in the browser-->
-<!-- Navbar-  -->
-
-<!-- ?apiKey=YOUR-API-KEY.-->
-<!-- Added comment to test git push-->

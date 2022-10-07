@@ -1,17 +1,23 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for, redirect
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import text
+#from sqlalchemy.sql import text
 
 # We are not using this sqlconnection but this line just creates a sqlite db file
 sqlconnection = sqlite3.connect('recipes.db')
 
 app = Flask(__name__)
 
+
 db_name = 'recipes.db'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+db_name = 'recipes.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
@@ -26,27 +32,20 @@ class Ingredients(db.Model):
         self.ingredient = ingredient
         self.expiration_date = expiration_date
 
-print(db)
+
 
 @app.route("/", methods=['GET', 'POST'])
-def home():
-
+def gfg():
     if request.method == 'POST':
-        return ''
-
-    else:
-        #return "This is a get request"
-        return render_template('refrigerator2.html')
-
-@app.route("/add", methods=['POST'])
-def add_ingredient():
-    pass
-
+        first_ingredient = request.form.get("Ingredient1")
+        first_expiration = request.form.get("Ingredient1expiration")
+        return "Your name is "+first_ingredient+first_expiration
+    return render_template("refrigerator2.html")
 
 
 
 """
-used to test the database connection, place inside a flask function
+used to test the database connection, placed inside a flask function
 
  try:
         db.session.query(text('1')).from_statement(text('SELECT 1')).all()
