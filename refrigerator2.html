@@ -25,6 +25,20 @@
             <div id="userguidecsv" class="form-text">Enter comma separated ingredients</div>
         </div>
 
+        <div class="mb-3">
+            <label for="Ingredients2" class="form-label">What's in your Fridge?</label>
+            <input type="text" class="form-control" id="Ingredients2" aria-describedby="emailHelp"
+                onKeyUp="doSomeCalculationsAndDisplay()">
+            <div id="userguidecsv" class="form-text">Enter comma separated ingredients</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="Ingredients3" class="form-label">What's in your Fridge?</label>
+            <input type="text" class="form-control" id="Ingredients3" aria-describedby="emailHelp"
+                onKeyUp="doSomeCalculationsAndDisplay()">
+            <div id="userguidecsv" class="form-text">Enter comma separated ingredients</div>
+        </div>
+
         <h2> Dietary Restrictions</h2>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="exampleRadios" id="Vegan" value="Vegan" checked>
@@ -69,6 +83,7 @@
                 let splitString = elem.value.split(",")
                 urlString = ""
                 for (food of splitString) {
+                    food = food
                     urlString += food + ",+"
                 }
                 console.log(urlString)
