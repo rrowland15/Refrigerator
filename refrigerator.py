@@ -115,6 +115,7 @@ def recipe():
     api_response = requests.get(get_url).content
     api_dict_object = json.loads(api_response)
     print(api_dict_object)
+    recipe_id = api_dict_object[0]["id"]
     title = api_dict_object[0]["title"]
     recipe_image = api_dict_object[0]["image"]
     potential_missed_ingredient_count = api_dict_object[0]["missedIngredientCount"]
@@ -122,14 +123,20 @@ def recipe():
     potential_missed_ingredients = []
     potential_missed_ingredients_jpgs = []
     for ingredient_dict in potential_missed_ingredients_dict_list:
-        name = ingredient_dict["name"]
+        name = ingredient_dict["originalName"]
         potential_missed_ingredients.append(name)
 
     for ingredient_dict in potential_missed_ingredients_dict_list:
         image = ingredient_dict["image"]
         potential_missed_ingredients_jpgs.append(image)
 
-    return render_template("recipe.html", title=title, recipe_image=recipe_image, potential_missed_ingredient_count=potential_missed_ingredient_count, potential_missed_ingredients=potential_missed_ingredients)
+    # Build the recipe card https://api.spoonacular.com/recipes/634206/card?apiKey=291bc42edd5b45fca7c83089d1f1da9b
+    recipe_url_prefix = "https://api.spoonacular.com/recipes/"
+    recipe_url_postfix = "/card?apiKey=291bc42edd5b45fca7c83089d1f1da9b"
+    recipe_url = recipe_url_prefix + str(recipe_id) + recipe_url_postfix
+    api_card = json.loads(requests.get(recipe_url).content)["url"]
+
+    return render_template("recipe.html", title=title, recipe_image=recipe_image, potential_missed_ingredient_count=potential_missed_ingredient_count, potential_missed_ingredients=potential_missed_ingredients, recipe_card=api_card)
 
 
 # To navigate to the about.html page
