@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, url_for, redirect
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 import json
-import requests
+from datetime import datetime
 
 #from sqlalchemy.sql import text
 
@@ -32,11 +32,14 @@ class Ingredients(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ingredient = db.Column(db.String, unique=True)
     # this will need to changed to a date format?
-    expiration_date = db.Column(db.String)
+    expiration_date = db.Column(db.Date)
 
     def __init__(self, ingredient, expiration_date):
         self.ingredient = ingredient
+        if (type(expiration_date) != datetime):
+            expiration_date = datetime.strptime(expiration_date, '%Y-%m-%d')
         self.expiration_date = expiration_date
+
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -90,13 +93,12 @@ def myfridge():
 # To navigate to the recipe.html page
 @app.route("/recipe", methods=['GET'])
 def recipe():
-    base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
+    base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients"
     postfix_url = "&number=1&ignorePantry=true&apiKey=291bc42edd5b45fca7c83089d1f1da9b"
     temporary = "orange,+banana"
     get_url = base_url + temporary + postfix_url
-    print(get_url)
-    api_response = requests.get(get_url)
-    print(api_response.content)
+    api_response = request.get(get_url)
+    print(api_response)
     if request.method == 'POST':
         pass
     else:
