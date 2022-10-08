@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, url_for, redirect
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
+import json
+
 #from sqlalchemy.sql import text
 
 
@@ -83,12 +85,24 @@ def myfridge():
             print(e)
             return 'Something is wrong'
 
-        # return render_template("fridgeinventory.html")
+
+# To navigate to the recipe.html page
+@app.route("/recipe", methods=['GET'])
+def recipe():
+    base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients"
+    postfix_url = "&number=1&ignorePantry=true&apiKey=291bc42edd5b45fca7c83089d1f1da9b"
+    temporary = "orange,+banana"
+    get_url = base_url + temporary + postfix_url
+    api_response = request.get(get_url)
+    print(api_response)
+    if request.method == 'POST':
+        pass
+    else:
+        return render_template("recipe.html")
+
 
 # To navigate to the about.html page
-
-
-@app.route("/about", methods=['Get'])
+@app.route("/about", methods=['GET'])
 def about():
     if request.method == 'POST':
         pass
