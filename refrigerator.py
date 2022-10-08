@@ -72,11 +72,22 @@ def myfridge():
     if request.method == 'POST':
         pass
     else:
+        try:
+            ingredients = Ingredients.query.all()
+            content = ''
+            for ingredient_record in ingredients:
+                content += ingredient_record.ingredient + " "
+            return render_template("fridgeinventory.html", content=content)
 
-        return render_template("fridgeinventory.html")
+        except Exception as e:
+            print(e)
+            return 'Something is wrong'
 
+        # return render_template("fridgeinventory.html")
 
 # To navigate to the about.html page
+
+
 @app.route("/about", methods=['Get'])
 def about():
     if request.method == 'POST':
