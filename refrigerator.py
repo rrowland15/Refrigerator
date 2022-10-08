@@ -96,7 +96,7 @@ def recipe():
     get_url = base_url + temporary + postfix_url
     print(get_url)
     api_response = requests.get(get_url)
-    print(api_response)
+    print(api_response.content)
     if request.method == 'POST':
         pass
     else:
