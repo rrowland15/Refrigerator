@@ -53,6 +53,16 @@ def gfg():
     return redirect(url_for('home'))
 
 
+@app.route("/removeIngredient", methods=['POST'])  # Being tested
+def removal():
+    removal_record = Ingredients(request.form.get(
+        "removedingredient"))
+    # Ingredients.query.filter_by(ingredients=removal_record).delete()
+    db.session.delete(removal_record)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
 @app.route("/myfridge", methods=['GET'])
 def myfridge():
     if request.method == 'POST':

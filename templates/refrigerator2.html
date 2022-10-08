@@ -80,7 +80,6 @@
             <input type="text" class="form-control" placeholder="Ingredient" name="ingredient">
             <input type="text" class="form-control" placeholder="Expiration" name="expiration_date">
         </div>
-        <div id="result1"></div>
         <br>
         <button type="submit" value="Submit" class="btn btn-primary" id="sendIt">Submit</button>
         <button type="add" value="Add" class="btn btn-primary" id="sendIt">Add</button>
@@ -91,16 +90,15 @@
 
     <h2>Remove items from your fridge</h2>
 
-    <form action="/placeholder" method="post">
+    <form action="removeIngredient" method="post">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">Remove Item</span>
             </div>
-            <input type="text" class="form-control" placeholder="Ingredient" name="Ingredient1">
+            <input type="text" class="form-control" placeholder="Ingredient" name="removedingredient">
 
-            <div id="result1"></div>
             <br>
-            <button type="submit" value="Submit" class="btn btn-primary" id="sendIt">Submit</button>
+            <button type="submit" value="Submit" class="btn btn-primary" id="sendremove">Remove</button>
     </form>
 
     <br>
