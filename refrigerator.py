@@ -3,6 +3,7 @@ import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 import json
 from datetime import datetime
+import config
 
 #from sqlalchemy.sql import text
 
@@ -94,7 +95,7 @@ def myfridge():
 @app.route("/recipe", methods=['GET'])
 def recipe():
     base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
-    postfix_url = "&number=1&ignorePantry=true&apiKey=291bc42edd5b45fca7c83089d1f1da9b"
+    postfix_url = "&number=1&ignorePantry=true&apiKey=" + config.api_key
     temporary = "orange,+banana"
     get_url = base_url + temporary + postfix_url
     print(get_url)
