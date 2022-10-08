@@ -7,6 +7,6 @@ Refrigerator app
 - preliminary readme
 
 -delete/otherwise mark expired foods?
--sort fridge by expiration date not date entered? 
+-sort fridge by expiration date not date entered (done)
 
 

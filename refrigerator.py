@@ -100,14 +100,24 @@ def recipe():
     base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
     postfix_url = "&number=1&ignorePantry=true&apiKey=291bc42edd5b45fca7c83089d1f1da9b"
     temporary = "orange,+banana"
-    get_url = base_url + temporary + postfix_url
+    #real call for first n expiring foods 
+    n = 3
+    ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
+    search_q = ""
+    for i in range(n):
+        search_q += ingredients[i].ingredient
+        if (i < n - 1):
+            search_q += ",+"
+        
+    #get_url = base_url + temporary + postfix_url
+    get_url = base_url + search_q + postfix_url
     print(get_url)
     api_response = requests.get(get_url).content
     api_dict_object = json.loads(api_response)
     print(api_dict_object)
     title = api_dict_object[0]["title"]
     print(title)
-    return render_template("recipe.html", title=title)
+    return render_template("recipe 2.html", title=title)
 
 # To navigate to the about.html page
 
