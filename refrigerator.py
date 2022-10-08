@@ -23,11 +23,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 
+
 class Ingredients(db.Model):
     __tablename__ = 'ingredients_table'
     id = db.Column(db.Integer, primary_key=True)
     ingredient = db.Column(db.String, unique=True)
-    expiration_date = db.Column(db.String) # this will need to changed to a date format?
+    # this will need to changed to a date format?
+    expiration_date = db.Column(db.String)
 
     def __init__(self, ingredient, expiration_date):
         self.ingredient = ingredient
@@ -40,13 +42,29 @@ def home():
         pass
     return render_template("refrigerator2.html")
 
+
 @app.route("/addIngredient", methods=['POST'])
 def gfg():
-    ingredient_record = Ingredients(request.form.get("ingredient"), request.form.get("expiration_date"))
+    ingredient_record = Ingredients(request.form.get(
+        "ingredient"), request.form.get("expiration_date"))
     db.create_all()
     db.session.add(ingredient_record)
     db.session.commit()
     return redirect(url_for('home'))
+
+
+@app.route("/myfridge", methods=['GET'])
+def myfridge():
+    if request.method == 'POST':
+        pass
+    return render_template("fridgeinventory.html")
+
+
+@app.route("/about", methods=['Get'])
+def about():
+    if request.method == 'POST':
+        pass
+    return render_template("about.html")
 
 
 # For database printing purposes (to print out the data currently in the database): delete decorator and function after done with the project
@@ -57,14 +75,13 @@ def database():
         ingredients = Ingredients.query.all()
         ingredient_text = '<ul>'
         for ingredient_record in ingredients:
-            ingredient_text += '<li>' + ingredient_record.ingredient + ',' + ingredient_record.expiration_date + '</li>'
+            ingredient_text += '<li>' + ingredient_record.ingredient + \
+                ',' + ingredient_record.expiration_date + '</li>'
         ingredient_text += '</ul>'
         return ingredient_text
     except Exception as e:
         print(e)
         return 'Something is wrong'
-
-
 
 
 """
