@@ -93,12 +93,13 @@ def myfridge():
 # To navigate to the recipe.html page
 @app.route("/recipe", methods=['GET'])
 def recipe():
-    base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients"
+    base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
     postfix_url = "&number=1&ignorePantry=true&apiKey=291bc42edd5b45fca7c83089d1f1da9b"
     temporary = "orange,+banana"
     get_url = base_url + temporary + postfix_url
+    print(get_url)
     api_response = request.get(get_url)
-    print(api_response)
+    print(api_response.content)
     if request.method == 'POST':
         pass
     else:
