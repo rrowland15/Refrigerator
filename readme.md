@@ -6,3 +6,7 @@ Refrigerator app
 - setup github repo
 - preliminary readme
 
+-delete/otherwise mark expired foods?
+-sort fridge by expiration date not date entered? 
+
+
