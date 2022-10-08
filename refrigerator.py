@@ -3,6 +3,7 @@ import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 #from sqlalchemy.sql import text
 
+
 # We are not using this sqlconnection but this line just creates a sqlite db file
 sqlconnection = sqlite3.connect('recipes.db')
 
@@ -14,8 +15,8 @@ db_name = 'recipes.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-db_name = 'recipes.db'
+app.debug = True
+#db_name = 'recipes.db'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -26,21 +27,30 @@ class Ingredients(db.Model):
     __tablename__ = 'ingredients_table'
     id = db.Column(db.Integer, primary_key=True)
     ingredient = db.Column(db.String)
-    expiration_date = db.Column(db.String)
+    expiration_date = db.Column(db.String) # this will need to changed to a date format?
 
     def __init__(self, ingredient, expiration_date):
         self.ingredient = ingredient
         self.expiration_date = expiration_date
 
 
-
 @app.route("/", methods=['GET', 'POST'])
-def gfg():
+def home():
     if request.method == 'POST':
-        first_ingredient = request.form.get("Ingredient1")
-        first_expiration = request.form.get("Ingredient1expiration")
-        return "Your name is "+first_ingredient+first_expiration
+        pass
     return render_template("refrigerator2.html")
+
+@app.route("/addIngredient", methods=['POST'])
+def gfg():
+    ingredient_record = Ingredients(request.form.get("ingredient"), request.form.get("expiration_date"))
+    db.create_all()
+    db.session.add(ingredient_record)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
+
+
 
 
 

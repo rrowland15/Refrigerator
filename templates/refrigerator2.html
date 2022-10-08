@@ -42,13 +42,13 @@
     <br>
     <p>Add items to your fridge</p>
 
-    <form action="{{ url_for("gfg")}}" method="post">
+    <form action="addIngredient" method="post">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">Add Item</span>
             </div>
-            <input type="text" class="form-control" placeholder="Ingredient" name="Ingredient1">
-            <input type="text" class="form-control" placeholder="Expiration" name="Ingredient1expiration">
+            <input type="text" class="form-control" placeholder="Ingredient" name="ingredient">
+            <input type="text" class="form-control" placeholder="Expiration" name="expiration_date">
         </div>
         <div id="result1"></div>
         <br>
