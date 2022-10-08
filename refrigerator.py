@@ -83,7 +83,7 @@ def myfridge():
             ingredients = Ingredients.query.all()
             content = ''
             for ingredient_record in ingredients:
-                content += ingredient_record.ingredient + " "
+                content += ingredient_record.ingredient + "&emsp;" + ingredient_record.expiration_date.strftime('%m-%d-%y') + "<br>"
             return render_template("fridgeinventory.html", content=content)
 
         except Exception as e:
