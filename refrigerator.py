@@ -63,6 +63,7 @@ def removal():
     return redirect(url_for('home'))
 
 
+# To navigate to the Fridge page
 @app.route("/myfridge", methods=['GET'])
 def myfridge():
     if request.method == 'POST':
@@ -70,6 +71,7 @@ def myfridge():
     return render_template("fridgeinventory.html")
 
 
+# To navigate to the about.html page
 @app.route("/about", methods=['Get'])
 def about():
     if request.method == 'POST':
