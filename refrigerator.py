@@ -80,7 +80,8 @@ def myfridge():
         pass
     else:
         try:
-            ingredients = Ingredients.query.all()
+            #show up in order of expiring first to last
+            ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
             content = ''
             for ingredient_record in ingredients:
                 content += ingredient_record.ingredient + "&emsp;" + ingredient_record.expiration_date.strftime('%m-%d-%y') + "<br>"
