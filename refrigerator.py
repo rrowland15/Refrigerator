@@ -112,7 +112,6 @@ def recipe():
 
     #get_url = base_url + temporary + postfix_url
     get_url = base_url + search_q + postfix_url
-    print(get_url)
     api_response = requests.get(get_url).content
     api_dict_object = json.loads(api_response)
     print(api_dict_object)
@@ -121,12 +120,15 @@ def recipe():
     potential_missed_ingredient_count = api_dict_object[0]["missedIngredientCount"]
     potential_missed_ingredients_dict_list = api_dict_object[0]["missedIngredients"]
     potential_missed_ingredients = []
+    potential_missed_ingredients_jpgs = []
     for ingredient_dict in potential_missed_ingredients_dict_list:
         name = ingredient_dict["name"]
         potential_missed_ingredients.append(name)
 
-    print(title, recipe_image, potential_missed_ingredient_count,
-          potential_missed_ingredients)
+    for ingredient_dict in potential_missed_ingredients_dict_list:
+        image = ingredient_dict["image"]
+        potential_missed_ingredients_jpgs.append(image)
+
     return render_template("recipe.html", title=title, recipe_image=recipe_image, potential_missed_ingredient_count=potential_missed_ingredient_count, potential_missed_ingredients=potential_missed_ingredients)
 
 
