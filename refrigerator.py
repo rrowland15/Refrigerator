@@ -53,12 +53,10 @@ def gfg():
     return redirect(url_for('home'))
 
 
-@app.route("/removeIngredient", methods=['POST'])  # Being tested
+@app.route("/removeIngredient", methods=['POST'])  # This works now
 def removal():
     item = request.form.get("removedingredient")
     removal_id = (Ingredients.query.filter_by(ingredient=item).first()).id
-    # Ingredients.query.filter_by(ingredients=removal_record).delete()
-    # db.session.delete(removal_record)
     Ingredients.query.filter_by(id=removal_id).delete()
     db.session.commit()
     return redirect(url_for('home'))
