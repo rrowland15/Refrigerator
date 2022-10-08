@@ -42,6 +42,8 @@ def home():
         pass
     return render_template("refrigerator2.html")
 
+# to add an ingredient along with it's expiration date
+
 
 @app.route("/addIngredient", methods=['POST'])
 def gfg():
@@ -52,8 +54,10 @@ def gfg():
     db.session.commit()
     return redirect(url_for('home'))
 
+# to remove an ingredient by name
 
-@app.route("/removeIngredient", methods=['POST'])  # This works now
+
+@app.route("/removeIngredient", methods=['POST'])  # This works now!!
 def removal():
     item = request.form.get("removedingredient")
     removal_id = (Ingredients.query.filter_by(ingredient=item).first()).id
@@ -67,7 +71,9 @@ def removal():
 def myfridge():
     if request.method == 'POST':
         pass
-    return render_template("fridgeinventory.html")
+    else:
+
+        return render_template("fridgeinventory.html")
 
 
 # To navigate to the about.html page
