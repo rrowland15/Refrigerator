@@ -72,10 +72,9 @@
 
     <div class="text-center">
     
-        <a href="/myfridge" class="btn btn-light btn-lg text-center" role="button" aria-pressed="true">My
-            Fridge</a>
+        <a href="/myfridge" class="btn btn-light btn-lg btn-block text-center" role="button" aria-pressed="true">My Fridge</a>
     </div>
-    <br>
+    
     <br>
     <h2>Put food in my fridge..</h2>
 
@@ -88,14 +87,15 @@
             <input type="date" class="form-control" placeholder="Expiration" name="expiration_date">
         </div> 
         <br>
-        <button type="submit" value="Submit" class="btn btn-light btn-lg" id="sendIt">Add Ingredient</button>
+        <button type="submit" value="Submit" class="btn btn-light btn-lg btn-block" id="sendIt">Add Ingredient</button>
+        <br>
 
     </form>
 
     <br>
     
     
-    <h2>Get food from my fridge..</h2>
+    <h2>Remove food from fridge..</h2>
 
     <form action="removeIngredient" method="post">
         <div class="input-group">
@@ -105,7 +105,8 @@
             <input type="text" class="form-control" placeholder="Ingredient" name="removedingredient">
         </div>
         <br>
-        <button type="submit" value="Submit" class="btn btn-light btn-lg" id="sendremove">Remove Ingredient</button>
+        <button type="submit" value="Submit" class="btn btn-light btn-lg btn-block" id="sendremove">Remove Ingredient</button>
+        <br>
     </form>
 
     <br>
