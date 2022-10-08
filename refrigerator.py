@@ -80,8 +80,9 @@ def myfridge():
         pass
     else:
         try:
-            #show up in order of expiring first to last
-            ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
+            # show up in order of expiring first to last
+            ingredients = Ingredients.query.order_by(
+                Ingredients.expiration_date)
             content = ''
             for ingredient_record in ingredients:
                 content += ingredient_record.ingredient + "&emsp;" + \
@@ -100,7 +101,7 @@ def recipe():
     base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
     postfix_url = "&number=1&ignorePantry=true&apiKey=291bc42edd5b45fca7c83089d1f1da9b"
     temporary = "orange,+banana"
-    #real call for first n expiring foods 
+    # real call for first n expiring foods
     n = 3
     ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
     search_q = ""
@@ -108,7 +109,7 @@ def recipe():
         search_q += ingredients[i].ingredient
         if (i < n - 1):
             search_q += ",+"
-        
+
     #get_url = base_url + temporary + postfix_url
     get_url = base_url + search_q + postfix_url
     print(get_url)
@@ -116,8 +117,18 @@ def recipe():
     api_dict_object = json.loads(api_response)
     print(api_dict_object)
     title = api_dict_object[0]["title"]
-    print(title)
-    return render_template("recipe 2.html", title=title)
+    recipe_image = api_dict_object[0]["image"]
+    potential_missed_ingredient_count = api_dict_object[0]["missedIngredientCount"]
+    potential_missed_ingredients_dict_list = api_dict_object[0]["missedIngredients"]
+    potential_missed_ingredients = []
+    for ingredient_dict in potential_missed_ingredients_dict_list:
+        name = ingredient_dict["name"]
+        potential_missed_ingredients.append(name)
+
+    print(title, recipe_image, potential_missed_ingredient_count,
+          potential_missed_ingredients)
+    return render_template("recipe.html", title=title, recipe_image=recipe_image, potential_missed_ingredient_count=potential_missed_ingredient_count, potential_missed_ingredients=potential_missed_ingredients)
+    =
 
 # To navigate to the about.html page
 
