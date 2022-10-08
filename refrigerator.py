@@ -128,7 +128,7 @@ def recipe():
     print(title, recipe_image, potential_missed_ingredient_count,
           potential_missed_ingredients)
     return render_template("recipe.html", title=title, recipe_image=recipe_image, potential_missed_ingredient_count=potential_missed_ingredient_count, potential_missed_ingredients=potential_missed_ingredients)
-    =
+
 
 # To navigate to the about.html page
 
