@@ -3,7 +3,8 @@ import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 import json
 from datetime import datetime
-import config
+#import config
+import requests
 
 #from sqlalchemy.sql import text
 
@@ -40,7 +41,6 @@ class Ingredients(db.Model):
         if (type(expiration_date) != datetime):
             expiration_date = datetime.strptime(expiration_date, '%Y-%m-%d')
         self.expiration_date = expiration_date
-
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -83,7 +83,9 @@ def myfridge():
             ingredients = Ingredients.query.all()
             content = ''
             for ingredient_record in ingredients:
-                content += ingredient_record.ingredient + "&emsp;" + ingredient_record.expiration_date.strftime('%m-%d-%y') + "<br>"
+                content += ingredient_record.ingredient + "&emsp;" + \
+                    ingredient_record.expiration_date.strftime(
+                        '%m-%d-%y') + "<br>"
             return render_template("fridgeinventory.html", content=content)
 
         except Exception as e:
@@ -95,16 +97,16 @@ def myfridge():
 @app.route("/recipe", methods=['GET'])
 def recipe():
     base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
-    postfix_url = "&number=1&ignorePantry=true&apiKey=" + config.api_key
+    postfix_url = "&number=1&ignorePantry=true&apiKey=291bc42edd5b45fca7c83089d1f1da9b"
     temporary = "orange,+banana"
     get_url = base_url + temporary + postfix_url
     print(get_url)
-    api_response = request.get(get_url)
-    print(api_response.content)
-    if request.method == 'POST':
-        pass
-    else:
-        return render_template("recipe.html")
+    api_response = requests.get(get_url).content
+    api_dict_object = json.loads(api_response)
+    print(api_dict_object)
+    title = api_dict_object[0]["title"]
+    print(title)
+    return render_template("recipe.html", title=title)
 
 # To navigate to the about.html page
 
