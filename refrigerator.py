@@ -105,8 +105,9 @@ def recipe():
     else:
         return render_template("recipe.html")
 
-
 # To navigate to the about.html page
+
+
 @app.route("/about", methods=['GET'])
 def about():
     if request.method == 'POST':
