@@ -26,7 +26,7 @@ db = SQLAlchemy(app)
 class Ingredients(db.Model):
     __tablename__ = 'ingredients_table'
     id = db.Column(db.Integer, primary_key=True)
-    ingredient = db.Column(db.String)
+    ingredient = db.Column(db.String, unique=True)
     expiration_date = db.Column(db.String) # this will need to changed to a date format?
 
     def __init__(self, ingredient, expiration_date):
@@ -49,7 +49,20 @@ def gfg():
     return redirect(url_for('home'))
 
 
-
+# For database printing purposes (to print out the data currently in the database): delete decorator and function after done with the project
+# make sure to add "/database" to the url
+@app.route("/database", methods=['GET'])
+def database():
+    try:
+        ingredients = Ingredients.query.all()
+        ingredient_text = '<ul>'
+        for ingredient_record in ingredients:
+            ingredient_text += '<li>' + ingredient_record.ingredient + ',' + ingredient_record.expiration_date + '</li>'
+        ingredient_text += '</ul>'
+        return ingredient_text
+    except Exception as e:
+        print(e)
+        return 'Something is wrong'
 
 
 
