@@ -10,33 +10,33 @@
             -o-background-size: cover;
             background-size: cover;
             background-color: #cccccc;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+            font-family: Georgia, 'Times New Roman', Times, serif
         }
 
         h1 {
             color: white;
-            background-color: rgb(72, 17, 17);
             text-align: center;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+            font-family: Georgia, 'Times New Roman', Times, serif
         }
 
         h2 {
             color: white;
-            background-color: rgb(72, 17, 17);
+            background-color: rgb(17, 72, 22);
             text-align: center;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+            font-family: Georgia, 'Times New Roman', Times, serif
         }
 
         p {
             color: white;
             text-align: center;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+            font-family: Georgia, 'Times New Roman', Times, serif
         }
 
         form {
             text-align: center;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
         }
+        
     </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,17 +67,17 @@
         </div>
     </nav>
 
-
-    <h2>See what is in your fridge</h2>
+    
+    <h2>What's in my fridge?</h2>
 
     <div class="text-center">
-
-        <a href="/myfridge" class="btn btn-primary btn-lg text-center" role="button" aria-pressed="true">My
+    
+        <a href="/myfridge" class="btn btn-light btn-lg text-center" role="button" aria-pressed="true">My
             Fridge</a>
     </div>
     <br>
-
-    <h2>Add items to your fridge</h2>
+    <br>
+    <h2>Put food in my fridge..</h2>
 
     <form action="addIngredient" method="post">
         <div class="input-group">
@@ -86,15 +86,16 @@
             </div>
             <input type="text" class="form-control" placeholder="Ingredient" name="ingredient">
             <input type="date" class="form-control" placeholder="Expiration" name="expiration_date">
-        </div>
+        </div> 
         <br>
-        <button type="submit" value="Submit" class="btn btn-primary" id="sendIt">Add Ingredient</button>
+        <button type="submit" value="Submit" class="btn btn-light btn-lg" id="sendIt">Add Ingredient</button>
 
     </form>
 
     <br>
-
-    <h2>Remove items from your fridge</h2>
+    
+    
+    <h2>Get food from my fridge..</h2>
 
     <form action="removeIngredient" method="post">
         <div class="input-group">
@@ -104,7 +105,7 @@
             <input type="text" class="form-control" placeholder="Ingredient" name="removedingredient">
         </div>
         <br>
-        <button type="submit" value="Submit" class="btn btn-primary" id="sendremove">Remove Ingredient</button>
+        <button type="submit" value="Submit" class="btn btn-light btn-lg" id="sendremove">Remove Ingredient</button>
     </form>
 
     <br>
@@ -113,12 +114,11 @@
     <div class="text-center">
 
 
-
-        <br>
+        
         <form action="/recipe" method="get"></form>
-        <h2>Find yourself a super delicious recipe using your oldest ingredients!</h2>
-        <button type="submit" value="Submit" class="btn btn-primary" id="sendrecipe">What do you want for
-            dinner?</button>
+        <h2>What can I cook?</h2>
+        
+        <button type="submit" value="Submit" class="btn btn-light btn-lg" id="sendrecipe">Show Possible Recipe</button>
         </form>
 
 
