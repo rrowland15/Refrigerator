@@ -3,7 +3,7 @@ import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 import json
 from datetime import datetime
-#import config
+import config
 import requests
 
 #from sqlalchemy.sql import text
