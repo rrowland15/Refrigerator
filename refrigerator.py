@@ -139,12 +139,11 @@ def recipe():
         image = ingredient_dict["image"]
         potential_missed_ingredients_jpgs.append(image)
 
-    # Build the recipe card https://api.spoonacular.com/recipes/634206/card?apiKey=291bc42edd5b45fca7c83089d1f1da9b
+
     recipe_url_prefix = "https://api.spoonacular.com/recipes/"
     recipe_url_postfix = "/card?apiKey=" + config.api_key
     recipe_url = recipe_url_prefix + str(recipe_id) + recipe_url_postfix
     api_card = json.loads(requests.get(recipe_url).content)["url"]
-
     return render_template("recipe.html", title=title, recipe_image=recipe_image, potential_missed_ingredient_count=potential_missed_ingredient_count, potential_missed_ingredients=potential_missed_ingredients, recipe_card=api_card)
 
 
@@ -173,20 +172,6 @@ def database():
     except Exception as e:
         print(e)
         return 'Something is wrong'
-
-
-"""
-used to test the database connection, placed inside a flask function
-
- try:
-        db.session.query(text('1')).from_statement(text('SELECT 1')).all()
-        return '<h1> It works.</h1>'
- except Exception as e:
-        # e holds description of the error
-        error_text = "<p> The error:<br>" + str(e) + "</p>"
-        hed = '<h1> Something is broken.</h1>'
-        return hed + error_text
-"""
 
 
 if __name__ == "__main__":
