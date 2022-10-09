@@ -74,12 +74,12 @@ def removal():
     return redirect(url_for('home'))
 
 
-#remove all ingredients that have expired 
-@app.route("/removeExpired", methods = ["POST", "GET"])
+# remove all ingredients that have expired
+@app.route("/removeExpired", methods=["POST", "GET"])
 def removeExpired():
     now = datetime.now()
     Ingredients.query.filter(Ingredients.expiration_date < now).delete()
-    db.session.commit() 
+    db.session.commit()
     return redirect(url_for('myfridge'))
 
 
@@ -91,7 +91,8 @@ def myfridge():
     else:
         try:
             # show up in order of expiring first to last
-            ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
+            ingredients = Ingredients.query.order_by(
+                Ingredients.expiration_date)
             content = ''
             for ingredient_record in ingredients:
                 content += ingredient_record.ingredient + "&emsp;" + \
@@ -112,6 +113,7 @@ def recipe():
     temporary = "orange,+banana"
 
     ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
+
     def callFirstNFoods(n):
         search_q = ""
         for i in range(n):
@@ -120,12 +122,12 @@ def recipe():
                 search_q += ",+"
         return search_q
 
-    #call for first n expiring foods
+    # call for first n expiring foods
     if (len(Ingredients.query.all()) >= 3):
         search_q = callFirstNFoods(3)
     elif (len(Ingredients.query.all()) > 0):
         search_q = callFirstNFoods(1)
-    else: #if fridge is empty
+    else:  # if fridge is empty
         search_q + "eggs"
 
     #get_url = base_url + temporary + postfix_url
@@ -147,7 +149,6 @@ def recipe():
     for ingredient_dict in potential_missed_ingredients_dict_list:
         image = ingredient_dict["image"]
         potential_missed_ingredients_jpgs.append(image)
-
 
     recipe_url_prefix = "https://api.spoonacular.com/recipes/"
     recipe_url_postfix = "/card?apiKey=" + config.api_key
@@ -182,7 +183,7 @@ def database():
         print(e)
         return 'Something is wrong'
 
-#helper for recipe()
+# helper for recipe()
 
 
 if __name__ == "__main__":
