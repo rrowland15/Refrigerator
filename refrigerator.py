@@ -107,7 +107,7 @@ def myfridge():
 @app.route("/recipe", methods=['GET'])
 def recipe():
     base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
-    postfix_url = "&number=1&ignorePantry=true&apiKey=291bc42edd5b45fca7c83089d1f1da9b"
+    postfix_url = "&number=1&ignorePantry=true&apiKey=" + config.api_key
     temporary = "orange,+banana"
 
     # real call for first n expiring foods
@@ -141,7 +141,7 @@ def recipe():
 
     # Build the recipe card https://api.spoonacular.com/recipes/634206/card?apiKey=291bc42edd5b45fca7c83089d1f1da9b
     recipe_url_prefix = "https://api.spoonacular.com/recipes/"
-    recipe_url_postfix = "/card?apiKey=291bc42edd5b45fca7c83089d1f1da9b"
+    recipe_url_postfix = "/card?apiKey=" + config.api_key
     recipe_url = recipe_url_prefix + str(recipe_id) + recipe_url_postfix
     api_card = json.loads(requests.get(recipe_url).content)["url"]
 
