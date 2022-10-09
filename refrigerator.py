@@ -72,6 +72,14 @@ def removal():
     db.session.commit()
     return redirect(url_for('home'))
 
+#remove all ingredients that have expired 
+@app.route("/removeExpiredIngredients", methods = ["POST"])
+def removeExpired():
+    items = Ingredients.query.filter_by(expiration_date < datetime.now()).first().id
+    Ingredients.query.filter_by(Ingredients.query.filter_by(id=items)).delete() 
+    db.session.commit() 
+    redirect(url_for('home'))
+
 
 # To navigate to the Fridge page
 @app.route("/myfridge", methods=['GET'])
@@ -81,8 +89,7 @@ def myfridge():
     else:
         try:
             # show up in order of expiring first to last
-            ingredients = Ingredients.query.order_by(
-                Ingredients.expiration_date)
+            ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
             content = ''
             for ingredient_record in ingredients:
                 content += ingredient_record.ingredient + "&emsp;" + \
@@ -101,6 +108,7 @@ def recipe():
     base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
     postfix_url = "&number=1&ignorePantry=true&apiKey=291bc42edd5b45fca7c83089d1f1da9b"
     temporary = "orange,+banana"
+
     # real call for first n expiring foods
     n = 3
     ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
@@ -154,7 +162,7 @@ def about():
 @app.route("/database", methods=['GET'])
 def database():
     try:
-        ingredients = Ingredients.query.all()
+        ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
         ingredient_text = '<ul>'
         for ingredient_record in ingredients:
             ingredient_text += '<li>' + ingredient_record.ingredient + \
