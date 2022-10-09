@@ -5,9 +5,9 @@ import json
 from datetime import datetime
 import config
 import requests
-from sqlalchemy import func
 
-#from sqlalchemy.sql import text
+
+
 
 
 # We are not using this sqlconnection but this line just creates a sqlite db file
@@ -22,7 +22,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.debug = True
-#db_name = 'recipes.db'
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -34,7 +34,6 @@ class Ingredients(db.Model):
     __tablename__ = 'ingredients_table'
     id = db.Column(db.Integer, primary_key=True)
     ingredient = db.Column(db.String, unique=True)
-    # this will need to changed to a date format?
     expiration_date = db.Column(db.Date)
 
     def __init__(self, ingredient, expiration_date):
@@ -43,7 +42,11 @@ class Ingredients(db.Model):
             expiration_date = datetime.strptime(expiration_date, '%Y-%m-%d')
         self.expiration_date = expiration_date
 
+
 def missing_ingredients_not_in_db(api_missing_ingredients_set):
+    """ This function takes in the missing ingredients from the api in a set
+    and removes ingredients which overlap with the records in the database
+    """
     with app.app_context():
         db_ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
         ingredient_name_set = set()
@@ -64,8 +67,6 @@ def home():
     return render_template("refrigerator2.html")
 
 # to add an ingredient along with it's expiration date
-
-
 @app.route("/addIngredient", methods=['POST'])
 def gfg():
     ingredient_record = Ingredients(request.form.get(
@@ -76,8 +77,6 @@ def gfg():
     return redirect(url_for('home'))
 
 # to remove an ingredient by name
-
-
 @app.route("/removeIngredient", methods=['POST'])  # This works now!!
 def removal():
     item = request.form.get("removedingredient")
@@ -123,7 +122,6 @@ def myfridge():
 def recipe():
     base_url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients="
     postfix_url = "&number=1&ignorePantry=true&apiKey=" + config.api_key
-    temporary = "orange,+banana"
 
     ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
 
@@ -143,29 +141,37 @@ def recipe():
     else:  # if fridge is empty
         search_q + "eggs"
 
-    #get_url = base_url + temporary + postfix_url
+
     get_url = base_url + search_q + postfix_url
     api_response = requests.get(get_url).content
     api_dict_object = json.loads(api_response)
-    print(api_dict_object)
     recipe_id = api_dict_object[0]["id"]
     title = api_dict_object[0]["title"]
     recipe_image = api_dict_object[0]["image"]
-    potential_missed_ingredient_count = api_dict_object[0]["missedIngredientCount"]
     potential_missed_ingredients_dict_list = api_dict_object[0]["missedIngredients"]
-    #potential_missed_ingredients = []
 
     potential_missed_ingredients = set()
-
-
     potential_missed_ingredients_jpgs = []
+
     for ingredient_dict in potential_missed_ingredients_dict_list:
         name = ingredient_dict["originalName"]
         potential_missed_ingredients.add(name)
-        #potential_missed_ingredients.append(name)
 
-    potential_missed_ingredients = missing_ingredients_not_in_db(potential_missed_ingredients)
-    potential_missed_ingredient_count = len(potential_missed_ingredients)
+
+    potential_missed_ingredients_set = missing_ingredients_not_in_db(potential_missed_ingredients)
+    potential_missed_ingredient_count = len(potential_missed_ingredients_set)
+
+    potential_missed_ingredients = '<span>'
+
+    ingredient_counter = 0
+    for ingredient_string in potential_missed_ingredients_set:
+        if ingredient_counter != potential_missed_ingredient_count - 1:
+            potential_missed_ingredients += ingredient_string + ", " + "</span>"
+            ingredient_counter += 1
+        else:
+            potential_missed_ingredients += ingredient_string + "</span>"
+            ingredient_counter += 1
+
 
     for ingredient_dict in potential_missed_ingredients_dict_list:
         image = ingredient_dict["image"]
@@ -179,8 +185,6 @@ def recipe():
 
 
 # To navigate to the about.html page
-
-
 @app.route("/about", methods=['GET'])
 def about():
     if request.method == 'POST':
@@ -204,7 +208,6 @@ def database():
         print(e)
         return 'Something is wrong'
 
-# helper for recipe()
 
 
 if __name__ == "__main__":

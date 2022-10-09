@@ -78,8 +78,8 @@
     <h1>Recipe for You</h1>
     <h2>Using your soonest expiring ingredient</h2>
     <h3> {{ title }} </h3>
-    <h3> {{ potential_missed_ingredient_count }} potential missing ingredients</h3>
-    <h3> Do we have these? {{ potential_missed_ingredients }} </h3>
+    <h3> {{ potential_missed_ingredient_count }} missing ingredients</h3>
+    <h3> Do we have these? {{ potential_missed_ingredients|safe }} </h3>
     <br>
     <br>
     <div class="container">
