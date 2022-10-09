@@ -14,8 +14,8 @@
         }
 
         h1 {
-            color: rgb(252, 198, 198);
-            background-color: rgb(65, 63, 63);
+            color: white;
+            background-color: black;
             text-align: center;
             font-family: Georgia, 'Times New Roman', Times, serif
         }
@@ -23,6 +23,13 @@
         h2 {
             color: white;
             background-color: rgb(72, 17, 17);
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif
+        }
+
+        h3 {
+            color: black;
+            background-color: white;
             text-align: center;
             font-family: Georgia, 'Times New Roman', Times, serif
         }
@@ -70,9 +77,9 @@
     </nav>
     <h1>Recipe for You</h1>
     <h2>Using your soonest expiring ingredient</h2>
-    <h1> {{ title }} </h1>
-    <h1> {{ potential_missed_ingredient_count }} potential missing ingredients</h1>
-    <h1> Do we have these? {{ potential_missed_ingredients }} </h1>
+    <h3> {{ title }} </h3>
+    <h3> {{ potential_missed_ingredient_count }} potential missing ingredients</h3>
+    <h3> Do we have these? {{ potential_missed_ingredients }} </h3>
     <br>
     <br>
     <div class="container">
