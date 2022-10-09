@@ -154,7 +154,7 @@ def recipe():
     potential_missed_ingredients_jpgs = []
 
     for ingredient_dict in potential_missed_ingredients_dict_list:
-        name = ingredient_dict["originalName"]
+        name = ingredient_dict["name"]
         potential_missed_ingredients.add(name)
 
 
