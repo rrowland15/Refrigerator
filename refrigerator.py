@@ -43,6 +43,19 @@ class Ingredients(db.Model):
             expiration_date = datetime.strptime(expiration_date, '%Y-%m-%d')
         self.expiration_date = expiration_date
 
+def missing_ingredients_not_in_db(api_missing_ingredients_set):
+    with app.app_context():
+        db_ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
+        ingredient_name_set = set()
+        for ingredient_entry in db_ingredients:
+            ingredient_name_set.add(ingredient_entry.ingredient)
+        print(ingredient_name_set)
+        test_missed_ingredient_set = api_missing_ingredients_set
+        truly_missing_ingredients = test_missed_ingredient_set.difference(ingredient_name_set)
+        return truly_missing_ingredients
+
+
+
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -140,11 +153,19 @@ def recipe():
     recipe_image = api_dict_object[0]["image"]
     potential_missed_ingredient_count = api_dict_object[0]["missedIngredientCount"]
     potential_missed_ingredients_dict_list = api_dict_object[0]["missedIngredients"]
-    potential_missed_ingredients = []
+    #potential_missed_ingredients = []
+
+    potential_missed_ingredients = set()
+
+
     potential_missed_ingredients_jpgs = []
     for ingredient_dict in potential_missed_ingredients_dict_list:
         name = ingredient_dict["originalName"]
-        potential_missed_ingredients.append(name)
+        potential_missed_ingredients.add(name)
+        #potential_missed_ingredients.append(name)
+
+    potential_missed_ingredients = missing_ingredients_not_in_db(potential_missed_ingredients)
+    potential_missed_ingredient_count = len(potential_missed_ingredients)
 
     for ingredient_dict in potential_missed_ingredients_dict_list:
         image = ingredient_dict["image"]
@@ -153,7 +174,7 @@ def recipe():
     recipe_url_prefix = "https://api.spoonacular.com/recipes/"
     recipe_url_postfix = "/card?apiKey=" + config.api_key
     recipe_url = recipe_url_prefix + str(recipe_id) + recipe_url_postfix
-    api_card = json.loads(requests.get(recipe_url).content)
+    api_card = json.loads(requests.get(recipe_url).content)["url"]
     return render_template("recipe.html", title=title, recipe_image=recipe_image, potential_missed_ingredient_count=potential_missed_ingredient_count, potential_missed_ingredients=potential_missed_ingredients, recipe_card=api_card)
 
 
