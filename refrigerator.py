@@ -72,13 +72,14 @@ def removal():
     db.session.commit()
     return redirect(url_for('home'))
 
+
 #remove all ingredients that have expired 
-@app.route("/removeExpiredIngredients", methods = ["POST"])
+@app.route("/removeExpired", methods = ["POST", "GET"])
 def removeExpired():
-    items = Ingredients.query.filter_by(expiration_date < datetime.now()).first().id
-    Ingredients.query.filter_by(Ingredients.query.filter_by(id=items)).delete() 
+    now = datetime.now()
+    Ingredients.query.filter(Ingredients.expiration_date < now).delete()
     db.session.commit() 
-    redirect(url_for('home'))
+    return redirect(url_for('myfridge'))
 
 
 # To navigate to the Fridge page
