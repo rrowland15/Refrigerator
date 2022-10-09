@@ -5,6 +5,7 @@ import json
 from datetime import datetime
 import config
 import requests
+from sqlalchemy import func
 
 #from sqlalchemy.sql import text
 
@@ -110,14 +111,22 @@ def recipe():
     postfix_url = "&number=1&ignorePantry=true&apiKey=" + config.api_key
     temporary = "orange,+banana"
 
-    # real call for first n expiring foods
-    n = 3
     ingredients = Ingredients.query.order_by(Ingredients.expiration_date)
-    search_q = ""
-    for i in range(n):
-        search_q += ingredients[i].ingredient
-        if (i < n - 1):
-            search_q += ",+"
+    def callFirstNFoods(n):
+        search_q = ""
+        for i in range(n):
+            search_q += ingredients[i].ingredient
+            if (i < n - 1):
+                search_q += ",+"
+        return search_q
+
+    #call for first n expiring foods
+    if (len(Ingredients.query.all()) >= 3):
+        search_q = callFirstNFoods(3)
+    elif (len(Ingredients.query.all()) > 0):
+        search_q = callFirstNFoods(1)
+    else: #if fridge is empty
+        search_q + "eggs"
 
     #get_url = base_url + temporary + postfix_url
     get_url = base_url + search_q + postfix_url
@@ -143,7 +152,7 @@ def recipe():
     recipe_url_prefix = "https://api.spoonacular.com/recipes/"
     recipe_url_postfix = "/card?apiKey=" + config.api_key
     recipe_url = recipe_url_prefix + str(recipe_id) + recipe_url_postfix
-    api_card = json.loads(requests.get(recipe_url).content)["url"]
+    api_card = json.loads(requests.get(recipe_url).content)
     return render_template("recipe.html", title=title, recipe_image=recipe_image, potential_missed_ingredient_count=potential_missed_ingredient_count, potential_missed_ingredients=potential_missed_ingredients, recipe_card=api_card)
 
 
@@ -172,6 +181,8 @@ def database():
     except Exception as e:
         print(e)
         return 'Something is wrong'
+
+#helper for recipe()
 
 
 if __name__ == "__main__":
